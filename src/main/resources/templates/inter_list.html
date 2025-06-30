@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Interns - Admin</title>
+</head>
+<body>
+<h2>All Intern Applications</h2>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Domain</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="intern : ${interns}">
+        <td th:text="${intern.name}"></td>
+        <td th:text="${intern.email}"></td>
+        <td th:text="${intern.domain}"></td>
+
+        <!-- ✅ Update status form -->
+        <td>
+            <form th:action="@{/update-status}" method="post">
+                <input type="hidden" name="id" th:value="${intern.id}" />
+
+                <select name="status">
+                    <option th:selected="${intern.status == 'Applied'}">Applied</option>
+                    <option th:selected="${intern.status == 'Confirmed'}">Confirmed</option>
+                    <option th:selected="${intern.status == 'Rejected'}">Rejected</option>
+                    <option th:selected="${intern.status == 'Pending'}">Pending</option>
+                </select>
+
+                <button type="submit">Update</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a href="/admin-logout">Logout</a>
+
+</body>
+</html>
