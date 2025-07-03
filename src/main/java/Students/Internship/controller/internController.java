@@ -65,7 +65,7 @@ public class internController {
             List<internshipCourse> courses = courseRepo.findAll();
             model.addAttribute("courses", courses);
 
-            return "intern_register"; // ✅ Go to course detail page
+            return "home"; // ✅ Go to course detail page
         } else {
             model.addAttribute("error", "Invalid email or password");
             return "login"; // ❌ Don’t go to intern_register on failure
@@ -83,16 +83,7 @@ public class internController {
   
 
 
-    // === INTERN LIST (ADMIN ONLY) ===
-    @GetMapping("/inter_list")
-    public String showAllInterns(Model model, HttpSession session) {
-        if (session.getAttribute("isAdmin") == null) {
-            return "redirect:/admin-login";
-        }
-        List<studentIntern> interns = repo.findAll();
-        model.addAttribute("interns", interns);
-        return "inter_list";
-    }
+   
 
     // === INTERN STATUS CHECK ===
     @GetMapping("/intern_status")
@@ -110,17 +101,7 @@ public class internController {
         }
         return "intern_status";
     }
-
-    // === ADMIN UPDATE STATUS ===
-    @PostMapping("/update-status")
-    public String updateStatus(@RequestParam String id, @RequestParam String status) {
-        Optional<studentIntern> internOpt = repo.findById(id);
-        internOpt.ifPresent(intern -> {
-            intern.setStatus(status);
-            repo.save(intern);
-        });
-        return "redirect:/inter_list";
-    }
+   
 
     // === CONTACT FORM ===
    // @GetMapping("/contact")
@@ -147,6 +128,7 @@ public class internController {
       //  System.out.println("Generate certificate for: " + name + ", " + course);
         //return "redirect:/home";
     //}
- 
+   
+
 
 }

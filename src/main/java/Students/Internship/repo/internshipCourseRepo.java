@@ -4,6 +4,7 @@ import Students.Internship.model.internshipCourse;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 	public interface internshipCourseRepo extends MongoRepository<internshipCourse, String> {
+		 internshipCourse findByCourseId(String courseId);
 	}
 
 

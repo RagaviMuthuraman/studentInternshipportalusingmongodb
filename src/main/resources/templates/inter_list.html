@@ -1,41 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>All Interns - Admin</title>
+    <meta charset="UTF-8">
 </head>
 <body>
+
 <h2>All Intern Applications</h2>
 
 <table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Domain</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
-    <tr th:each="intern : ${interns}">
-        <td th:text="${intern.name}"></td>
-        <td th:text="${intern.email}"></td>
-        <td th:text="${intern.domain}"></td>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Domain</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="intern : ${interns}">
+            <td th:text="${intern.studentName}">Name</td>
+            <td th:text="${intern.email}">Email</td>
+            <td th:text="${intern.appliedCourse}">Course</td>
+            <td>
+                <form th:action="@{/admin/update-status}" method="post">
+                    <input type="hidden" name="internId" th:value="${intern.id}" />
 
-        <!-- ✅ Update status form -->
-        <td>
-            <form th:action="@{/update-status}" method="post">
-                <input type="hidden" name="id" th:value="${intern.id}" />
+                    <div th:if="${intern.status == 'Confirmed'}">
+                        <span th:text="${intern.status + ' 🔒'}" style="color: gray;"></span>
+                    </div>
 
-                <select name="status">
-                    <option th:selected="${intern.status == 'Applied'}">Applied</option>
-                    <option th:selected="${intern.status == 'Confirmed'}">Confirmed</option>
-                    <option th:selected="${intern.status == 'Rejected'}">Rejected</option>
-                    <option th:selected="${intern.status == 'Pending'}">Pending</option>
-                </select>
-
-                <button type="submit">Update</button>
-            </form>
-        </td>
-    </tr>
+                    <div th:unless="${intern.status == 'Confirmed'}">
+                        <select name="status">
+                            <option value="Applied"
+                                    th:selected="${intern.status == 'Applied'}">Applied</option>
+                            <option value="Confirmed"
+                                    th:selected="${intern.status == 'Confirmed'}">Confirmed</option>
+                            <option value="Not Confirmed"
+                                    th:selected="${intern.status == 'Not Confirmed'}">Not Confirmed</option>
+                        </select>
+                        <button type="submit">Update</button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </tbody>
 </table>
+
+
+<br>
+
+<!-- 📥 Download Excel -->
+<a href="/admin/downloadInterns">
+    <button>Download Interns Excel</button>
+</a>
+<form action="/admin/uploadExcel" method="post" enctype="multipart/form-data">
+    <label>Select Excel File:</label>
+    <input type="file" name="file" accept=".xlsx" required />
+    <button type="submit">Upload Excel</button>
+</form>
+
+
+<br><br>
+
+<!-- 🔐 Logout -->
 <a href="/admin-logout">Logout</a>
 
 </body>

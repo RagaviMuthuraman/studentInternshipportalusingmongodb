@@ -1,0 +1,17 @@
+
+    <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New Course</title>
+</head>
+<body>
+    <h2>Add Internship Course</h2>
+    <form th:action="@{/courses/add}" th:object="${course}" method="post">
+        <input type="text" th:field="*{courseId}" placeholder="Course ID (e.g. c006)" required/><br>
+        <input type="text" th:field="*{title}" placeholder="Course Title" required/><br>
+        <textarea th:field="*{description}" placeholder="Course Description" required></textarea><br>
+        <button type="submit">Add Course</button>
+    </form>
+</body>
+</html>
+    

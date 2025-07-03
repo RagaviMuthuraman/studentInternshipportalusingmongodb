@@ -43,31 +43,32 @@
     </style>
 </head>
 <body>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Available Internships</title>
+    <style>
+        /* same styles */
+    </style>
+</head>
+<body>
 
     <h2>Available Internship Courses</h2>
 
     <div class="container">
-        <div class="card">
-            <h3>Artificial Intelligence</h3>
-            <a href="/apply?course=AI" class="btn">Apply</a>
-        </div>
-        <div class="card">
-            <h3>Java Development</h3>
-            <a href="/apply?course=Java" class="btn">Apply</a>
-        </div>
-        <div class="card">
-            <h3>Python Programming</h3>
-            <a href="/apply?course=Python" class="btn">Apply</a>
-        </div>
-        <div class="card">
-            <h3>PHP Fullstack</h3>
-            <a href="/apply?course=PHP" class="btn">Apply</a>
-        </div>
-        <div class="card">
-            <h3>UI/UX Designing</h3>
-            <a href="/apply?course=Design" class="btn">Apply</a>
-        </div>
+        <div class="card" th:each="course : ${courses}">
+            <h3 th:text="${course.title}">Course Title</h3>
+            <p th:text="${course.description}">Course Description</p>
+              <a th:href="@{'/intern/register?courseId=' + ${course.courseId}}" class="btn">Apply</a>
+              
+               </div>
     </div>
+<a href="/admin/add-course">
+    <button style="background-color: #007bff; color: white; padding: 8px 12px; border: none; border-radius: 5px;">➕ Add New Course</button>
+</a>
+
+</body>
+</html>
 
 </body>
 </html>

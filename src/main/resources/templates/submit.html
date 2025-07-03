@@ -61,16 +61,27 @@
         <p th:text="${message}"></p>
     </div>
 
-    <form method="post" action="/apply">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="text" name="college" placeholder="College" required>
-        <input type="text" name="domain" placeholder="Domain" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="text" name="phone" placeholder="Phone" required>
-        <input type="text" name="resumeLink" placeholder="Resume Link">
-        <input type="text" name="course" placeholder="course">
-        <button type="submit">Apply</button>
-    </form>
+ <form method="post" action="/apply">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="text" name="resumeLink" placeholder="Resume Link">
+
+    <select name="courseId" required>
+        <option value="" disabled selected>Select a Course</option>
+        <option th:each="course : ${courses}"
+                th:value="${course.courseId}"
+                th:text="${course.title}">
+        </option>
+    </select>
+
+    <button type="submit">Apply</button>
+</form>
+
+<!-- Show success message -->
+<div th:if="${message}" style="color: green; margin-top: 10px;">
+    <p th:text="${message}"></p>
+</div>
+ 
 </div>
 <!-- Add at the bottom of body or just inside head -->
 <div th:utext="${popup}"></div>
